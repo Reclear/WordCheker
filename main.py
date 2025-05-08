@@ -19,10 +19,14 @@ def parse_words():
         try:
             message = ','.join(items)
             result = agent.ask_ai(message)
-            data = "\n".join(json.load(result))
+            body = result.get("choices")[0].get("message").get("content")
 
+
+            data = json.loads(body)
+            str = "\n".join(data)
+            print(str)
             with open("out.txt", "a", encoding="utf-8") as f:
-                f.write(data)
+                f.write(str)
                 f.close()
 
         except Exception as e:
